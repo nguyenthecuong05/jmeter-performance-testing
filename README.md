@@ -63,13 +63,13 @@ Do máy tính tại trường không có quyền cài đặt phần mềm, Apach
 
 | Chỉ số | Kết quả thực tế |
 |---|---|
-| Tổng số mẫu (Samples) | [Điền từ báo cáo] |
-| Thời gian phản hồi trung bình (Average, ms) | [Điền từ báo cáo] |
-| Thời gian phản hồi nhỏ nhất (Min, ms) | [Điền từ báo cáo] |
-| Thời gian phản hồi lớn nhất (Max, ms) | [Điền từ báo cáo] |
-| Throughput | [Điền từ báo cáo] |
-| Tỷ lệ lỗi (Error %) | [Điền từ báo cáo] |
-| Kết quả assertion | [Passed/Failed theo kết quả thật] |
+| Tổng số mẫu (Samples) | [20] |
+| Thời gian phản hồi trung bình (Average, ms) | [77,90 ms] |
+| Thời gian phản hồi nhỏ nhất (Min, ms) | [18 ms] |
+| Thời gian phản hồi lớn nhất (Max, ms) | [945 ms] |
+| Throughput | [4,93 giao dịch/giây] |
+| Tỷ lệ lỗi (Error %) | [50%] |
+| Kết quả assertion | [10 mẫu thành công, 10 mẫu thất bại] |
 
 ### Nhận xét
 
