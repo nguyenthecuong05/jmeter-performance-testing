@@ -2,7 +2,7 @@
 
 **Sinh viên:** Nguyễn Thế Cường\
 **Mã sinh viên:** 23010176\
-**Môn học/lớp:** Đánh giá và kiểm thử chất lượng phần mềm\
+**Môn học/lớp:** Đánh giá và kiểm thử chất lượng phần mềm CSE703010-1-1-26(COUR01.LT2)\
 **Ngày thực hiện:** 14/10/2026
 
 ## 1. Giới thiệu
