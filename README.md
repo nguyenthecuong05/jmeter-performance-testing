@@ -1,104 +1,116 @@
-# Apache JMeter – Basic Website Performance Testing
+# Báo cáo kiểm thử hiệu năng website bằng Apache JMeter
 
-> **Student:** [Enter your full name]  
-> **Student ID:** [Enter your student ID]  
-> **Course / Class:** [Enter course or class]  
-> **Date:** [Enter date]
+> **Sinh viên:** Nguyễn Thế Cường 
+> **Mã sinh viên:** 23010176  
+> **Môn học/lớp:** Đánh giá và kiểm thử chất lượng phần mềm 
+> **Ngày thực hiện:** 14/10/2026
 
-## 1. Introduction
+## 1. Giới thiệu
 
-This project demonstrates a basic website performance test using Apache JMeter. It includes a reusable `.jmx` test plan, HTTP status assertions, and listeners for reviewing response-time and request statistics.
+Đề tài thực hiện kiểm thử hiệu năng cơ bản cho website bằng Apache JMeter. Bài kiểm thử gửi các HTTP GET request đến website mẫu `https://example.com`, kiểm tra mã phản hồi HTTP và thu thập các chỉ số thời gian phản hồi.
 
-The test targets `https://example.com`, a public example website. This is a small learning exercise, not a benchmark of production capacity.
+Do máy tính tại trường không có quyền cài đặt phần mềm, Apache JMeter được tải và chạy trên GitHub Actions. Cách làm này không yêu cầu cài JMeter trực tiếp trên máy tính cá nhân.
 
-## 2. Objectives
+## 2. Mục tiêu
 
-- Understand the Test Plan and Thread Group concepts.
-- Send HTTP GET requests to a website.
-- Check HTTP response codes with Response Assertion.
-- Review sample count, average/minimum/maximum response time, throughput, and error percentage.
-- Save the test plan and evidence in a GitHub repository.
+- Tìm hiểu Test Plan và Thread Group trong JMeter.
+- Mô phỏng nhiều người dùng gửi yêu cầu HTTP đến website.
+- Kiểm tra mã phản hồi HTTP bằng Response Assertion.
+- Thu thập và xem các chỉ số như tổng số request, thời gian phản hồi và tỷ lệ lỗi.
+- Lưu Test Plan, báo cáo và ảnh minh chứng trên GitHub.
 
-## 3. Tools
+## 3. Công cụ sử dụng
 
-- Apache JMeter 5.6.3 (the included plan uses standard JMeter components)
-- Java runtime compatible with the chosen JMeter release
-- GitHub for source files, documentation, and evidence
+- Apache JMeter 5.6.3.
+- Java 17 trên GitHub Actions runner.
+- GitHub repository và GitHub Actions để chạy kiểm thử, lưu kết quả.
 
-## 4. Test Scenario
+## 4. Kịch bản kiểm thử
 
-| Setting | Value |
+| Thuộc tính | Giá trị |
 |---|---|
-| Target host | `example.com` |
-| Protocol | HTTPS |
-| Virtual users | 5 |
-| Ramp-up period | 5 seconds |
+| Website kiểm thử | `https://example.com` |
+| Số người dùng ảo (Threads) | 5 |
+| Ramp-up period | 5 giây |
 | Loop count | 2 |
 | Request 1 | `GET /` |
 | Request 2 | `GET /changes.html` |
-| Assertions | HTTP response code equals 200 |
-| Expected sample count | 5 users × 2 requests × 2 loops = 20 samples |
+| Điều kiện kiểm tra | Mã phản hồi HTTP bằng 200 |
+| Tổng số mẫu dự kiến | 20 (5 người dùng × 2 request × 2 vòng lặp) |
 
-The expected sample count assumes all threads complete both requests on both iterations. Actual results can differ if a request fails or execution stops early.
+**Lưu ý:** 20 là số mẫu dự kiến nếu mọi request đều được thực hiện. Hãy ghi số liệu đo được từ lần chạy thực tế ở mục 7, không coi số dự kiến là kết quả.
 
-## 5. Repository Contents
+## 5. Cấu trúc repository
 
-- `test-plan/example-website-load-test.jmx` — JMeter test plan.
-- `.github/workflows/jmeter-test.yml` — optional workflow to run the test in GitHub Actions without installing JMeter on the school computer.
-- `results/README.md` — where to record actual test results.
-- `screenshots/README.md` — screenshot checklist.
+- `test-plan/example-website-load-test.jmx`: kịch bản kiểm thử JMeter.
+- `.github/workflows/jmeter-test.yml`: cấu hình GitHub Actions tải JMeter và chạy bài kiểm thử.
+- `results/`: ghi chú hoặc kết quả kiểm thử được lưu trong repository (nếu có).
+- `screenshots/`: ảnh minh chứng do sinh viên chụp từ lần chạy thực tế.
 
-## 6. How to Run
+## 6. Cách thực hiện
 
-### Option A — Run with JMeter already available
+1. Mở repository trên GitHub và chọn tab **Actions**.
+2. Chọn workflow **JMeter Performance Test**.
+3. Chạy workflow bằng **Run workflow** (nếu chưa tự chạy).
+4. Mở lần chạy mới nhất và kiểm tra trạng thái. Dấu tích xanh cho biết job hoàn thành thành công; vẫn cần kiểm tra kết quả JMeter và assertion.
+5. Tải artifact `jmeter-results` ở phần **Artifacts** của trang Summary.
+6. Giải nén artifact để xem file kết quả `.jtl` và báo cáo HTML nếu workflow đã tạo ra chúng.
+7. Chụp ảnh màn hình thật và upload vào thư mục `screenshots/`.
 
-1. Open the `.jmx` file in Apache JMeter.
-2. Review the Thread Group, HTTP Request samplers, Response Assertions, and listeners.
-3. Press Start.
-4. Inspect View Results Tree, Summary Report, and Aggregate Report.
-5. Capture screenshots of the actual configuration and results.
+## 7. Kết quả kiểm thử thực tế
 
-### Option B — Run through GitHub Actions (no local installation)
+**Điền các giá trị dưới đây từ artifact/báo cáo của lần chạy thành công. Không để nguyên dấu ngoặc vuông khi nộp và không tự đặt số liệu.**
 
-1. Upload all project files to a GitHub repository.
-2. Open the repository's **Actions** tab.
-3. Select **JMeter Performance Test**.
-4. Click **Run workflow** and confirm.
-5. Open the completed workflow run and inspect the logs.
-6. Download the `jmeter-results` artifact. It contains the raw `.jtl` result file and generated HTML report if the workflow completes successfully.
-7. Capture screenshots of the successful workflow run and the generated report. Do not describe the test as passed unless the run and assertions actually pass.
-
-The workflow downloads JMeter in the GitHub-hosted runner. It does not install software on the school computer. GitHub Actions availability depends on repository settings and usage limits.
-
-## 7. Results
-
-**Fill in this section only after running the test. Do not invent performance numbers.**
-
-| Metric | Actual result |
+| Chỉ số | Kết quả thực tế |
 |---|---|
-| Total samples | [Fill from actual run] |
-| Average response time (ms) | [Fill from actual run] |
-| Minimum response time (ms) | [Fill from actual run] |
-| Maximum response time (ms) | [Fill from actual run] |
-| Throughput | [Fill from actual run] |
-| Error percentage | [Fill from actual run] |
-| Assertion status | [Passed / Failed, based on actual run] |
+| Tổng số mẫu (Samples) | [Điền từ báo cáo] |
+| Thời gian phản hồi trung bình (Average, ms) | [Điền từ báo cáo] |
+| Thời gian phản hồi nhỏ nhất (Min, ms) | [Điền từ báo cáo] |
+| Thời gian phản hồi lớn nhất (Max, ms) | [Điền từ báo cáo] |
+| Throughput | [Điền từ báo cáo] |
+| Tỷ lệ lỗi (Error %) | [Điền từ báo cáo] |
+| Kết quả assertion | [Passed/Failed theo kết quả thật] |
 
-### Analysis
+### Nhận xét
 
-[Explain the observed results. Mention whether all requests returned HTTP 200, whether assertions passed, and what the measured response times and error percentage show. A small test against a public example site does not prove how many users a production website can support.]
+[Nhận xét dựa trên số liệu thực tế: số request hoàn thành, mã HTTP trả về, assertion có đạt không, thời gian phản hồi và tỷ lệ lỗi. Đây là bài thử nghiệm nhỏ trên website mẫu, không đại diện cho khả năng chịu tải của website sản xuất.]
 
-## 8. Screenshots
+## 8. Ảnh minh chứng
 
-Add your own screenshots of actual execution to the `screenshots/` folder. See `screenshots/README.md` for the list. Do not use mockups as evidence of a test run.
+Upload ảnh vào thư mục `screenshots/` của repository. Tên file và đường dẫn trong Markdown phải khớp chính xác thì ảnh mới hiển thị.
 
-## 9. Conclusion
+### 8.1. Kịch bản kiểm thử
 
-This exercise demonstrates how to build a basic JMeter test plan, simulate concurrent users, validate HTTP responses, and inspect performance metrics. The final conclusion should be updated after reviewing the actual run.
+Ảnh chụp phần cấu hình trong file `.jmx` trên GitHub, hoặc ảnh giao diện JMeter nếu có thể mở Test Plan bằng JMeter.
 
-## 10. References
+![Kịch bản kiểm thử](screenshots/01-test-plan.png)
+
+### 8.2. GitHub Actions chạy thành công
+
+Ảnh chụp trang chi tiết workflow có dấu tích xanh và các bước `Download JMeter`, `Run JMeter test`, `Upload results` hoàn thành.
+
+![GitHub Actions chạy thành công](screenshots/05-github-actions.png)
+
+### 8.3. Báo cáo tổng hợp
+
+Ảnh chụp bảng số liệu thực tế trong HTML dashboard hoặc Summary/Aggregate Report được tạo bởi JMeter.
+
+![Báo cáo tổng hợp JMeter](screenshots/04-summary-report.png)
+
+### 8.4. Báo cáo HTML
+
+Nếu artifact có HTML dashboard, mở file `index.html` trong báo cáo đã giải nén rồi chụp ảnh phần dashboard hiển thị các chỉ số thực tế.
+
+![Báo cáo HTML JMeter](screenshots/06-html-dashboard.png)
+
+> Các đường dẫn ảnh ở trên là vị trí dự kiến. Ảnh chỉ hiển thị sau khi file ảnh thật được upload vào đúng thư mục `screenshots/` và được commit lên GitHub. Không tạo ảnh giả hoặc tự điền số liệu chưa đo.
+
+## 9. Kết luận
+
+Bài thực hành giúp làm quen với việc xây dựng kịch bản JMeter, mô phỏng người dùng, kiểm tra mã phản hồi HTTP và thu thập số liệu hiệu năng. Kết luận cuối cùng cần dựa trên kết quả thực tế trong artifact của lần chạy.
+
+## 10. Tài liệu tham khảo
 
 - Apache JMeter: https://jmeter.apache.org/
 - Getting Started: https://jmeter.apache.org/usermanual/get-started.html
 - Building a Web Test Plan: https://jmeter.apache.org/usermanual/build-web-test-plan
-- Building a Test Plan: https://jmeter.apache.org/usermanual/build-test-plan
