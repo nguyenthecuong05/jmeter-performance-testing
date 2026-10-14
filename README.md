@@ -73,59 +73,35 @@ JMeter trực tiếp trên máy tính cá nhân.
 
 Các chỉ số dưới đây được đọc từ HTML dashboard của lần chạy kiểm thử.
 
-  Chỉ số                                          Kết quả thực tế
-  ----------------------------------------- ---------------------
-  Tổng số mẫu (Samples)                                        20
-  Thời gian phản hồi trung bình (Average)                77,90 ms
-  Thời gian phản hồi nhỏ nhất (Min)                         18 ms
-  Thời gian phản hồi lớn nhất (Max)                        945 ms
-  Throughput tổng                             4,93 giao dịch/giây
-  Tỷ lệ lỗi tổng (Error %)                                 50,00%
-  Số mẫu PASS                                                  10
-  Số mẫu FAIL                                                  10
+| Chỉ số | Kết quả thực tế |
+|---|---:|
+| Tổng số mẫu (Samples) | 20 |
+| Thời gian phản hồi trung bình (Average) | 77,90 ms |
+| Thời gian phản hồi nhỏ nhất (Min) | 18 ms |
+| Thời gian phản hồi lớn nhất (Max) | 945 ms |
+| Throughput tổng | 4,93 giao dịch/giây |
+| Tỷ lệ lỗi tổng (Error %) | 50,00% |
+| Số mẫu PASS | 10 |
+| Số mẫu FAIL | 10 |
 
 ### 7.1. Kết quả theo từng request
 
-  ---------------------------------------------------------------------------------------------------
-  Request                  Samples    Failed      Error %   Average       Min       Max    Throughput
-  ---------------------- --------- --------- ------------ --------- --------- --------- -------------
-  `GET - Changes Page`          10        10      100,00%  22,50 ms     18 ms     27 ms     3,22 giao
-                                                                                            dịch/giây
-
-  `GET - Homepage`              10         0        0,00% 133,30 ms     20 ms    945 ms     2,48 giao
-                                                                                            dịch/giây
-
-  **Tổng**                  **20**    **10**   **50,00%**   **77,90 **18 ms**     **945   **4,93 giao
-                                                               ms**                ms**   dịch/giây**
-  ---------------------------------------------------------------------------------------------------
+| Request | Samples | Failed | Error % | Average | Min | Max | Throughput |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| GET - Changes Page | 10 | 10 | 100,00% | 22,50 ms | 18 ms | 27 ms | 3,22 giao dịch/giây |
+| GET - Homepage | 10 | 0 | 0,00% | 133,30 ms | 20 ms | 945 ms | 2,48 giao dịch/giây |
+| **Tổng** | **20** | **10** | **50,00%** | **77,90 ms** | **18 ms** | **945 ms** | **4,93 giao dịch/giây** |
 
 ### 7.2. Nhận xét
 
--   Kịch bản ghi nhận tổng cộng **20 mẫu**, đúng với số lượng dự kiến: 5
-    người dùng ảo × 2 request × 2 vòng lặp.
--   Có **10/20 mẫu thất bại**, tương ứng tỷ lệ lỗi tổng **50,00%**. Vì
-    vậy, dù workflow trên GitHub Actions hoàn thành thành công, kết quả
-    kiểm thử chưa thể xem là tất cả request đều đạt yêu cầu.
--   Request `GET - Homepage` có **10/10 mẫu thành công**, tỷ lệ lỗi
-    **0,00%**. Thời gian phản hồi trung bình là **133,30 ms**, nhỏ nhất
-    **20 ms** và lớn nhất **945 ms**.
--   Request `GET - Changes Page` có **10/10 mẫu thất bại**, tỷ lệ lỗi
-    **100,00%**. Thời gian phản hồi trung bình là **22,50 ms**. Phản hồi
-    nhanh không đồng nghĩa với request thành công; cần kiểm tra mã HTTP
-    thực tế và thông tin lỗi trong file `.jtl` hoặc log JMeter để xác
-    định nguyên nhân.
--   Thời gian phản hồi trung bình của toàn bộ mẫu là **77,90 ms**, nhưng
-    chỉ số này cần được xem cùng tỷ lệ lỗi. Do một nửa số mẫu thất bại,
-    không nên kết luận website đáp ứng tốt chỉ dựa vào thời gian phản
-    hồi.
--   Đây là bài thử nghiệm nhỏ với 5 người dùng ảo trên website mẫu, nên
-    kết quả không đại diện cho khả năng chịu tải của website sản xuất.
+- Bài kiểm thử ghi nhận tổng cộng 20 mẫu, đúng với số lượng dự kiến.
+- `GET - Homepage` có 10 mẫu, tất cả đều thành công, với tỷ lệ lỗi 0,00% và thời gian phản hồi trung bình 133,30 ms.
+- `GET - Changes Page` có 10 mẫu và cả 10 mẫu đều thất bại, tương ứng tỷ lệ lỗi 100,00%. Cần kiểm tra mã HTTP và thông tin lỗi trong file kết quả JMeter để xác định nguyên nhân.
+- Tỷ lệ lỗi tổng là 50,00%, nghĩa là một nửa số mẫu thất bại. Do đó, dù GitHub Actions chạy thành công, bài kiểm thử chưa thể được xem là hoàn toàn đạt yêu cầu.
+- Thời gian phản hồi trung bình của toàn bộ mẫu là 77,90 ms. Tuy nhiên, cần xem xét chỉ số này cùng tỷ lệ lỗi để đánh giá chính xác kết quả.
+- Đây là bài thử nghiệm nhỏ với 5 người dùng ảo trên website mẫu, không đại diện cho khả năng chịu tải của website sản xuất.
 
-**Kết luận từ số liệu:** Bài kiểm thử đã chạy và thu thập được số liệu,
-nhưng chưa đạt hoàn toàn do các request tới `GET - Changes Page` đều
-thất bại. Cần xem chi tiết lỗi và xác minh endpoint trước khi chạy lại.
-Báo cáo hiện tại không khẳng định nguyên nhân thất bại nếu chưa có bằng
-chứng từ log.
+**Kết luận:** Workflow đã hoàn thành và tạo được báo cáo kiểm thử. Tuy nhiên, cần tìm nguyên nhân khiến `GET - Changes Page` thất bại và kiểm tra lại sau khi khắc phục.
 
 ## 8. Ảnh minh chứng
 
